@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GoogleTasks</string>
+    <string name="task_name_header">Title</string>
+    <string name="task_name_hint">Enter title</string>
+    <string name="task_description_header">Description</string>
+    <string name="task_description_hint">Enter description</string>
+</resources>

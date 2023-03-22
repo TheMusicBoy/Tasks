@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DetailsFragment"
+    android:padding="15sp">
+
+    <TextView
+        android:id="@+id/titleHeader"
+        style="@style/TaskDetailsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/task_name_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/taskName"
+        />
+
+    <EditText
+        android:id="@+id/taskName"
+        style="@style/TaskEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleHeader"
+        android:hint="@string/task_name_hint"
+        />
+
+    <TextView
+        android:id="@+id/descriptionHeader"
+        style="@style/TaskDetailsHeader"
+        android:text="@string/task_description_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/taskName"
+        app:layout_constraintBottom_toTopOf="@id/taskDescription"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+
+    <EditText
+        android:id="@+id/taskDescription"
+        style="@style/TaskEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionHeader"
+        android:hint="@string/task_description_hint"
+        />
+
+    <ImageButton
+        android:id="@+id/completeButton"
+        style="@style/SubTextIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_not_done_task"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/markButton"
+        app:layout_constraintTop_toBottomOf="@id/taskDescription" />
+
+    <ImageButton
+        android:id="@+id/markButton"
+        style="@style/SubTextIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_not_marked_task"
+        app:layout_constraintEnd_toEndOf="@id/deleteButton"
+        app:layout_constraintStart_toEndOf="@id/completeButton"
+        app:layout_constraintTop_toBottomOf="@id/taskDescription" />
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        style="@style/SubTextIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_delete_task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/markButton"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
