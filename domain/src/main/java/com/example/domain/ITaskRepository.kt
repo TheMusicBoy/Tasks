@@ -1,17 +1,16 @@
 package com.example.domain
 
 import androidx.lifecycle.LiveData
+import java.util.*
 
 interface ITaskRepository {
-
     fun Create(task: Task)
 
-    fun Delete(id : Int)
+    fun Delete(id : UUID)
 
     fun Update(task : Task)
 
     fun GetAll() : LiveData<List<Task>>
 
-    fun GetById(id : Int) : LiveData<Task?>
-
+    fun GetById(id : UUID) : LiveData<Task?>
 }

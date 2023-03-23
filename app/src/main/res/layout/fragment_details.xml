@@ -77,8 +77,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_delete_task"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/markButton"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
+        app:layout_constraintStart_toEndOf="@id/markButton"
+        app:layout_constraintTop_toBottomOf="@id/taskDescription"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

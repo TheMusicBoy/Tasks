@@ -1,9 +1,12 @@
 package com.example.danilaproject.TaskListFragment
 
 import android.content.Context
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +18,7 @@ import com.example.danilaproject.R
 import com.example.danilaproject.databinding.FragmentTaskItemBinding
 import com.example.danilaproject.databinding.FragmentTaskListBinding
 import com.example.domain.Task
+import kotlinx.android.synthetic.main.fragment_details.*
 import java.util.*
 
 
@@ -36,32 +40,47 @@ class TaskListFragment : Fragment() {
     private inner class TaskHolder(view: View)
         : ViewHolder(view), View.OnClickListener {
 
-        private val binding : FragmentTaskItemBinding
-        private lateinit var _task : Task
+        private lateinit var _task: Task
+        private val taskName: TextView = itemView.findViewById(R.id.taskName)
+        private val taskDescription: TextView = itemView.findViewById(R.id.taskDescription)
+        private val taskMark: ImageButton = itemView.findViewById(R.id.taskMark)
+        private val taskComplete: ImageButton = itemView.findViewById(R.id.taskComplete)
 
 
         fun bind(task: Task) {
             _task = task
-            binding.taskName.text = task.Title
-            binding.taskDescription.text = task.Description
+            taskName.text = task.Title
+            taskDescription.text = task.Description
 
             if (task.Mark)
-                binding.taskMark.setBackgroundResource(R.drawable.ic_marked_task)
+                taskMark.setBackgroundResource(R.drawable.ic_marked_task)
             else
-                binding.taskMark.setBackgroundResource(R.drawable.ic_not_marked_task)
+                taskMark.setBackgroundResource(R.drawable.ic_not_marked_task)
 
             if (task.Completed)
-                binding.taskComplete.setBackgroundResource(R.drawable.ic_done_task)
+                taskComplete.setBackgroundResource(R.drawable.ic_done_task)
             else
-                binding.taskComplete.setBackgroundResource(R.drawable.ic_not_done_task)
+                taskComplete.setBackgroundResource(R.drawable.ic_not_done_task)
         }
 
         init {
-            binding = FragmentTaskItemBinding.inflate(layoutInflater)
+            itemView.setOnClickListener(this)
+
+            taskComplete.setOnClickListener {
+                _task.Completed = taskListViewModel.tasksLiveData.value!![position].Completed
+                taskListViewModel.tasksLiveData.value?.get(position)!!.Completed = _task.Completed
+
+                if (_task.Completed)
+                    completeButton.setBackgroundResource(R.drawable.ic_done_task)
+                else
+                    completeButton.setBackgroundResource(R.drawable.ic_not_done_task)
+
+                taskListViewModel.UpdateTask(_task)
+            }
         }
 
         override fun onClick(v: View?) {
-            // todo: add impementation
+            callbacks?.onTaskSelected(_task.Id)
         }
     }
 
@@ -83,7 +102,7 @@ class TaskListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callbacks = context as Callbacks?
+        callbacks = context as TaskListFragment.Callbacks?
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

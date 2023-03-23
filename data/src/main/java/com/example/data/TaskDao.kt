@@ -3,6 +3,7 @@ package com.example.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.data.Entities.TaskEntity
+import java.util.*
 
 @Dao
 interface TaskDao {
@@ -11,7 +12,7 @@ interface TaskDao {
     suspend fun Create(taskModel: TaskEntity)
 
     @Query("delete from Tasks where Id = :id")
-    suspend fun Delete(id: Int)
+    suspend fun Delete(id: UUID)
 
     @Update
     suspend fun Update(taskModel: TaskEntity)
@@ -20,6 +21,6 @@ interface TaskDao {
     fun GetAll() : LiveData<List<TaskEntity>>
 
     @Query("select * from Tasks where Id = :id")
-    fun GetById(id : Int) : LiveData<TaskEntity?>
+    fun GetById(id : UUID) : LiveData<TaskEntity?>
 
 }

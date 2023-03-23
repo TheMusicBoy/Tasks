@@ -8,6 +8,7 @@ import com.example.domain.ITaskRepository
 import com.example.domain.Task
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 private const val DB_NAME = "TaskDatabase"
@@ -44,7 +45,7 @@ class TaskRepository private constructor(context: Context)
         }
     }
 
-    override fun Delete(id: Int) {
+    override fun Delete(id: UUID) {
         GlobalScope.launch {
             _dao.Delete(id)
         }
@@ -65,7 +66,7 @@ class TaskRepository private constructor(context: Context)
         }
     }
 
-    override fun GetById(id : Int): LiveData<Task?> {
+    override fun GetById(id : UUID): LiveData<Task?> {
         val entity = _dao.GetById(id)
         return Transformations.map(entity) {
             TaskConverter.ToNullableModel(it)

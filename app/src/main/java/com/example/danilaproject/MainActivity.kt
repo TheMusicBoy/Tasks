@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), TaskListFragment.Callbacks {
     }
 
     override fun onTaskSelected(id : UUID) {
-        val fragment = DetailsFragment.newInstance()
+        val fragment = DetailsFragment.newInstance(id)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .addToBackStack(null)

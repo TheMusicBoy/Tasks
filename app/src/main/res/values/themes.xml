@@ -33,7 +33,7 @@
         <item name="android:textSize">20sp</item>
         <item name="color">@color/material_dynamic_neutral_variant80</item>
         <item name="singleLine">true</item>
-        <item name="android:layout_margin">8sp</item>
+        <item name="android:layout_margin">2sp</item>
     </style>
 
 </resources>
