@@ -2,6 +2,7 @@ package com.example.danilaproject.DetailsFragment
 
 import android.app.Activity
 import android.app.ActivityManager.TaskDescription
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
 import com.example.danilaproject.R
+import com.example.danilaproject.TaskListFragment.TaskListFragment
 import com.example.danilaproject.databinding.FragmentTaskItemBinding
 import com.example.domain.Task
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -24,6 +26,10 @@ import java.util.UUID
 const val ARG_TASK_ID = "task_id"
 
 class DetailsFragment : Fragment() {
+
+    interface Callbacks {
+        fun onTaskDeleted(taskId : UUID)
+    }
 
     private lateinit var taskName : EditText
     private lateinit var taskDescription : EditText
@@ -34,8 +40,14 @@ class DetailsFragment : Fragment() {
     private val detailsViewModel : DetailsViewModel by lazy {
         ViewModelProviders.of(this).get(DetailsViewModel::class.java)
     }
+    private var callbacks : DetailsFragment.Callbacks? = null
 
     private lateinit var _task : Task
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as DetailsFragment.Callbacks?
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,13 +110,6 @@ class DetailsFragment : Fragment() {
 
         taskMark.setOnClickListener {
             _task.Mark = !_task.Mark
-
-            Toast.makeText(
-                context,
-                "taskMark",
-                Toast.LENGTH_SHORT
-            ).show()
-
             if (_task.Mark)
                 taskMark.setBackgroundResource(R.drawable.ic_marked_task)
             else
@@ -120,11 +125,8 @@ class DetailsFragment : Fragment() {
         }
 
         deleteButton.setOnClickListener {
-            Toast.makeText(
-                context,
-                R.string.app_name,
-                Toast.LENGTH_SHORT
-            ).show()
+            detailsViewModel.DeleteTask(_task.Id)
+            callbacks?.onTaskDeleted(_task.Id)
         }
 
     }
@@ -132,6 +134,11 @@ class DetailsFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         detailsViewModel.UpdateTask(_task)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     private fun updateUI() {

@@ -6,7 +6,7 @@ import com.example.danilaproject.DetailsFragment.DetailsFragment
 import com.example.danilaproject.TaskListFragment.TaskListFragment
 import java.util.UUID
 
-class MainActivity : AppCompatActivity(), TaskListFragment.Callbacks {
+class MainActivity : AppCompatActivity(), TaskListFragment.Callbacks, DetailsFragment.Callbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,11 +21,16 @@ class MainActivity : AppCompatActivity(), TaskListFragment.Callbacks {
         }
     }
 
-    override fun onTaskSelected(id : UUID) {
-        val fragment = DetailsFragment.newInstance(id)
+
+    override fun onTaskSelected(taskId : UUID) {
+        val fragment = DetailsFragment.newInstance(taskId)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onTaskDeleted(taskId: UUID) {
+        supportFragmentManager.popBackStack()
     }
 }
